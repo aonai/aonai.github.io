@@ -4,12 +4,17 @@
             <div class="container">
                 <div class="row">
                     <div class="footer-col col-md-4">
-                        <h3>{{ site.footer.location }}</h3>
+                        <h3>{{ site.footer.mail }}</h3>
                         <p>
                             {% for adress in site.address %}
                                 {{ adress.line }} <br>
 		                    {% endfor %}
                         </p>
+                    </div>
+                    <div class="footer-col col-md-4">
+                            <h3>Contacts</h3>
+                            <p><i class="fa fa-envelope"></i> {{ site.email }}</p>
+                            <p><i class="fa fa-phone"></i> {{ site.phone-number }}</p>
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>{{ site.footer.social }}</h3>
@@ -20,10 +25,6 @@
                             </li>
 		                    {% endfor %}
                         </ul>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>{{ site.footer.credits }}</h3>
-                        <p>{{ site.credits }}</p>
                     </div>
                 </div>
             </div>
