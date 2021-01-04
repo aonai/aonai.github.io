@@ -117,13 +117,14 @@ iframe {
 
 header {
     text-align: center;
-    color: #fff;
-    background: #{{ site.color.primary }};
+    color: #{{ site.color.secondary-dark }};
+    background: #fff
 }
 
 header .container {
     padding-top: 100px;
     padding-bottom: 50px;
+    margin-bottom: 100px;
 }
 
 
@@ -162,7 +163,7 @@ header .intro-text .skills {
 
 @media(min-width:768px) {
     .navbar-fixed-top{
-        padding: 25px 0;
+        padding: 10px 0;
         -webkit-transition: padding .3s;
         -moz-transition: padding .3s;
         transition: padding .3s;        
@@ -205,7 +206,7 @@ header .intro-text .skills {
 }
 
 .navbar .navbar-title{
-    padding: 30px 0;
+    padding: 10px 0;
     letter-spacing: 1px;
     font-size: 2em;
     -webkit-transition: padding .3s;
@@ -229,8 +230,13 @@ section h2 {
 }
 
 section.success {
-    color: #fff;
-    background: #{{ site.color.primary }};
+    background: #fff;
+    color: #{{ site.color.primary }};
+}
+
+section.success .container p, a {
+    color: #{{ site.color.primary }};
+    line-height: 1.6em;
 }
 
 .row p {
