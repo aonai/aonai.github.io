@@ -26,9 +26,9 @@ bing_verify:
 
 # Color settings (hex-codes without the leading hash-tag)
 color:
-  primary: 84cfd9
-  primary-rgb: "132, 207, 217" 
-  secondary: 84cfd9
+  primary: 7bb5bd
+  primary-rgb: "123, 181, 189" 
+  secondary: 7bb5bd
   secondary-dark: 519ea8 
 
 # Footer settings
