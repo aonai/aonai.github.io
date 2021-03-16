@@ -1,4 +1,5 @@
 ---
+link: fast_tower
 title: Fast Tower
 intro: Using a Baxter robot to build a tower of cups.
 layout: default

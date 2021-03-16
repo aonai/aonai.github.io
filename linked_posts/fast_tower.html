@@ -1,0 +1,119 @@
+<html >
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/posts.css">
+    <head>
+        <title>Fast Tower</title>
+    </head>
+
+    <nav class="navbar">
+        <a href="javascript:history.back()"><span>&#9733</span></a>
+    </nav>
+
+    <body id="page-top" class="index">
+        <h1 class='title'>Fast Tower</h1>
+
+        <hr class="star-primary">
+        <div class="under-title">
+            <div class="container">
+                <div clsas="row">
+                    <div class="col-lg-2 ">
+                        <p>
+                            Skills:
+                            <br>
+                            Members: 
+                            <br>
+                            Time:
+                        </p>
+                    </div>
+                    <div class="col-lg-10 ">
+                        <p>
+                            Baxter, ROS, MoveIt!, Apriltag
+                            <br>
+                            Dimitrios Chamzas, Dongho Kang, Gabbie Wink
+                            <br>
+                            November, 2020
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <iframe width="750" height="422" src="https://www.youtube.com/embed/HEcnxoLQmnU" frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+        </iframe>
+
+        <hr class="para-break" data-content="  Description  "><link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <p>
+            This project is the final project of Embedded Systems in Robotics. Its goal is to control a Baxter robot 
+            to stack a fixed number of cups into a tower. The tower is built on a table that is placed in front of Baxter. 
+            The source code includes several different nodes to operate Baxter with or without computer vision and to build a 
+            ower out of 3, 6, and 10 cups. More detailed descriptions can be found on the project's GitHub page. To minimize 
+            challenges from vision detection and precise manipulation, this project is separated into two tasks. Starting with 
+            random cups placed in the middle of the table, task 1 needs to grab and place them at each side of the table in order.
+            Then, task2 needs to grab the sorted cups and place them back in the middle of the table to stack them into a tower. 
+            To avoid collision between the two arms, these two tasks are executed alternatively. Once one arm completes placing a cup,
+            it should move away from the middle of the table and leave workspace for the other arm. The image below shows how a 
+            table is divided into the working area and sorted area.  
+        </p>
+        <img src="../img/portfolio/fast-tower-table.png" style="width:50%"> 
+        <p>
+            
+            For this project, my main job is to control both arms of Baxter to let them grab and place cups from one to another 
+            specified location. The locations are either pre-defined or provided by Apriltags depending on whether the node uses
+            computer vision. The image below exhibits the logic of the robot's behaviors.
+        </p>
+        <img src="../img/portfolio/grab_and_place.png" style="width:50%">
+        <p> 
+            The image on the left below shows Baxter grabbing a sorted cup. The image on the right below shows Baxter 
+            placing the cup into the workstation. The movement of Baxter arm is controlled using ROS 
+            <a target="_blank" rel="noopener noreferrer" href="http://docs.ros.org/en/hydro/api/baxter_interface/html/baxter_interface.gripper.Gripper-class.html#version_check">MoveIt</a>
+            package for Baxter. The gripper is controlled using 
+            <a target="_blank" rel="noopener noreferrer" href="http://docs.ros.org/en/hydro/api/baxter_interface/html/baxter_interface.gripper.Gripper-class.html#version_check">Baxter ROS interface</a>.    
+        </p>
+        <div class="container">
+            <div clsas="row">
+                <div class="col-lg-1 ">
+                </div>
+                <div class="col-lg-5 ">
+                    <img src="../img/portfolio/fast-tower-single-grab.gif" style="width:80%" >  
+                </div>
+                <div class="col-lg-5 ">
+                    <img src="../img/portfolio/fast-tower-single-place.gif" style="width:80%" > 
+                </div>
+            </div>
+        </div>
+        <p>
+            The team mainly uses cartesian planning methods provided by MoveIt to control behavior of the arms and add a short 
+            settlement time in between each move. As shown in the image below, initially, the node will execute pose planning to 
+            get a better result if the output of cartesian planning is insufficient to complete a task (if the fraction of a computed path 
+            is less than 30%).  
+        </p>
+        <img src="../img/portfolio/execute_cartesian.png" style="width:50%" >
+        <p>
+            However, path planning with pose target sometimes result in unexpected behavior. For instance,
+            Baxter may rotate its arm by a full circle even if the task is to move a cup horizontally from left to right. Also, planners
+            may give a trajectory path too close to MoveIt objects leading to a collision at reality. This problem is fixed by adding more 
+            larger thresholds at MoveIt. Nonetheless, these thresholds need to be smaller to allow proper collision detection for attaching 
+            cup objects inside rviz. Rather than finding the right thresholds for all parameters, the team decides to generate all movements 
+            of Baxter only using cartesian planning. The revised code diagram is shown in the image below. 
+        </p>
+        <img src="../img/portfolio/execute_cartesian_2.png" style="width:30%">
+        <p>
+            Tasks completed by other team members include gazebo simulation, computer vision using AprilTags, and integration of all 
+            components. Please refer to the project's GitHub page for more information. 
+        </p>
+
+        <hr class="para-break" data-content="  Related Links  ">
+        <p>
+            <i class="fa fa-folder"></i>
+            <a class="i_link" href="https://drive.google.com/drive/folders/1TNZ8SyosjOLlZyvqhP1VXR4JyEkqHliD?usp=sharing" target="_blank" rel="noopener noreferrer">Other Video Demos</a>
+            <br>
+            <i class="fa fa-github"></i>
+            <a class="i_link" href="https://github.com/aonai/final-project-fast-tower.git" target="_blank" rel="noopener noreferrer"> Source Code</a>
+        </p>
+    </body>
+ 
+
+</html>  

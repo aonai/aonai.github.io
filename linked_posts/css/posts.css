@@ -1,0 +1,155 @@
+/*!
+ * Start Bootstrap - Freelancer Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+body {
+    overflow-x: hidden;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 50px;
+}
+
+p {
+    width: 80%;
+    margin:auto;
+    font-size: 20px;
+}
+
+p.small {
+    font-size: 16px;
+}
+
+i {
+    padding-bottom: 20px;
+}
+
+.i_link {
+    color: #7bb5bd;
+    padding-left:10px;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 500;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    width: 100%;
+    padding-top: 50px;
+    text-align: center;
+    color: #7bb5bd;
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+}
+
+hr.star-light,
+hr.star-primary {
+    color:  #7bb5bd;
+    margin-top: 20px;
+    max-width: 250px;
+    border: 0;
+    border-top: solid 5px;
+    text-align: center;
+    overflow: visible;
+}
+
+hr.star-light:after,
+hr.star-primary:after {
+    color:  #7bb5bd;
+    background-color: #fff;
+    content: "\2605";
+    display: inline-block;
+    position: relative;
+    top: -.6em;
+    font-size: 3em;
+}
+
+.under-title {
+    margin-top: 70px;
+    margin-bottom: 30px;
+}
+
+.under-title .container {
+    width:60%;
+    padding-left:5%;
+}
+
+.under-title div p{
+    color:  #7bb5bd;
+    text-align: left;
+}
+
+
+iframe {
+    margin-top:20px;
+    padding-left:5%;
+    display:block;
+    margin:auto;
+}
+
+hr.para-break {
+    color:  #7bb5bd;
+    height: 1.5em;
+    border-top: none;
+    border-bottom: solid 2px;
+    text-align: center;
+    overflow: visible;
+    margin:30px auto;
+    width:80%;
+}
+
+hr.para-break:after {
+    content: attr(data-content);
+    display: inline-block;
+    position: relative;
+    font-size: 2em;
+    padding: 0 1em;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #fff;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top:30px;
+    padding-bottom: 30px;
+}
+
+
+.navbar {
+    margin-top:-15px;
+    overflow: hidden;
+    position: fixed;
+    width:80%;
+    background-color:#7bb5bd;
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+}
+
+
+span {
+    font-size: 3em;
+    color:#fff;
+    padding:20px;
+}
+
+span:hover {
+    color: #4a6d72;
+}
+
+a:hover {
+    text-decoration:none;
+}
+
+
+
+.title {
+    padding-top: 100px;
+}
