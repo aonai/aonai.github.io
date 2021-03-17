@@ -54,9 +54,9 @@
         <p>
             This project is my independent study of the winter quarter. The goal of this project is to classify letters 
             written in front of a camera. The code can be run with either an Intel&reg;RealSense&trade; Depth Camera or
-            an integrated webcam. The code will track pen by using Haar Cascade object detection algorithm or filtering 
-            specified colors and display the trajectory on the screen. When user is done writing, the letter prediction is
-            output by a pre-trained PyTorch model.  The project can be separated into three main tasks: 
+            an integrated webcam. The code will track the pen by using the Haar Cascade object detection algorithm or filtering 
+            specified colors and display the trajectory on the screen. When the user is done writing, the letter prediction is
+            output by a pre-trained PyTorch model. The project can be separated into three main tasks: 
             <a href="#machine-learning">machine learning</a>, 
             <a href="#computer-vision">computer vision</a>, and
             <a href="#integration">integration</a>. 
@@ -66,13 +66,12 @@
         <p>
             This project trains a model using 
             <a href="https://pytorch.org/" target="_blank" rel="noopener noreferrer">PyTorch </a>
-            and 
-            <a href="https://arxiv.org/abs/1702.05373" target="_blank" rel="noopener noreferrer">EMNIST letter dataset</a>
-            
-            . The classes are alphabets 
-            from A to Z. Due to this structure; lowercase letters will also be classified as uppercases.
-            When loading the dataset, all EMNIST images are transformed into Pytorch tensor object and normalized. 
-            Both train and test sets are shuffled. The batch size of the loaders are the same as the size of class,
+            and the
+            <a href="https://arxiv.org/abs/1702.05373" target="_blank" rel="noopener noreferrer">EMNIST</a> letter dataset. 
+            The classes are alphabets 
+            from A to Z. Due to this structure, lowercase letters will also be classified as uppercases.
+            When loading the dataset, all EMNIST images are transformed into PyTorch tensor objects and normalized. 
+            Both training and testing sets are shuffled. The batch size of the loaders is the same as the size of classes,
             which is 26. One example of a batch of images with their ground truth is shown below. 
         </p>
 
@@ -81,22 +80,24 @@
 
         <p>
             The neural network used during training has two 2D convolution layers and three hidden layers.
-            At the beginning, a 2d max pooling is applied to the inputs. All layers are followed by rectified linear units (ReLU) 
+            In the beginning, a 2d max pooling is applied to the inputs. All layers are followed by rectified linear units (ReLU) 
             as their activation functions.
         </p>
         <img src="../img/portfolio/ws-nn-architecture.png" style="width:60%">
         
         <p>
-            The overall accuray of trained model on EMNIST letter dataset is around 93.3%. 
-            Accuracies on each class for most classes are above 90%. The image below shows accuracies of model on each class.  
+            The overall accuracy of the trained model on the EMNIST letter dataset is around 93.3%. 
+            Accuracies on each class for most classes are above 90%. The image below shows the accuracies of 
+            the model for each class.  
         </p>
         <img src="../img/portfolio/ws-test-acc.jpg" style="width:60%">
         
         <p>
-            As seen from the image above, the exceptions are G, I, a L. It is reasonable that I and L 
+            As seen from the image above, the exceptions are G, I, and L. It is reasonable that I and L 
             are easily confused, given that lower case i and l are very similar. As for G, this is likely to be
-            confused with lowercase Q. The images below are lowercase letters I, L, Q, G from left to right. The model
-            is able to correctly classify around 70% of these letters in the testing set.
+            confused with lowercase Q. The images below are lowercase letters I, L, Q, G from left to right. In 
+            general, the model
+            should correctly classify around 70% of these letters in the testing set.
         </p>
         <div class="container">
             <div clsas="row">
@@ -119,13 +120,13 @@
 
         <p>
             To test user inputs, at least three images are stored for each label. The overall accuracy is 96.3%. 
-            Accuracies for each class is shown below. Notice that the test set has only 178 images and are all 
-            written under the same condition, so the accuracies may be bias. 
+            Accuracies for each class are shown below. Notice that the test set has only 178 images and is all 
+            written under the same condition, so the accuracies may be biased. 
         </p>
         <img src="../img/portfolio/ws-user-input-test.jpg"  style="width:60%" > 
         
         <p>
-            Most classes are able to be classified. The images that are misclassified is likely due to 
+            Most classes can be classified. The images that are misclassified are likely due to 
             the shaking behavior while writing. Some of the lines are not correctly bounded or closed. 
             One example is the D below that is classified as P. 
         </p>
@@ -133,17 +134,17 @@
         
         <hr class="para-break" data-content="  Computer Vision  " id="computer-vision">
         <p>
-            At start of writing this project, tracking a pen is configured by filtering out a specific color range. 
-            Here, a red colored pen is used. To make detecting the color range easier, the also uses 
+            At the start of writing this project, tracking a pen is configured by filtering out a specific color range. 
+            Here, a red-colored pen is used. To make detecting the color range easier, it also uses 
             <a href="https://docs.opencv.org/3.4/d1/dc5/tutorial_background_subtraction.html" target="_blank" rel="noopener noreferrer">OpenCV background subtraction </a>
             function to overlay a grey mask on the steady background. 
-            However, some false positives still persist. To filter out the noises, position of pen on screen is 
-            defined as the averge of positions in five consecutive frames. As a result, tracking the pen is a little slow. 
-            This sometimes cause the strokes to be unsmooth. 
+            However, some false positives persist. To filter out the noises, the position of the pen on screen is 
+            defined as the average of positions in five consecutive frames. As a result, tracking the pen is a little slow. 
+            This sometimes causes the strokes to be unsmooth. 
         </p>
         <br>
         <p>
-            To improvie performance, this project also uses 
+            To improve performance, the project has an option to use 
             <a href="https://docs.opencv.org/3.4/db/d28/tutorial_cascade_classifier.html" target="_blank" rel="noopener noreferrer"> Haar Cascade </a>
             train and detect functions provided by OpenCV to track a pen. 
             The pen used for tracking is bought from  
@@ -166,22 +167,21 @@
         </div>
 
         <p>
-            The Haar Cascade model used in this project is trained using around 1,000 positive images and 500 negative images.
-            The classifier is able to correctly detect the pen in front of the camera; however, it will occasionally misclassify 
+            The Haar Cascade model used in the classifier can correctly detect the green pen in front of a depth camera; however, it will occasionally misclassify 
             other objects (such as fingers or shadows of similar shape) as the pen. To solve this problem without having to 
             retrain the model with more images, the code assumes that only one object is detected at each frame and that 
-            10 objects need to be detected before defining it as the pen. The code also bounds the size of detection between 30x30 and 80x80 
+            10 neighboring objects need to be detected before defining it as the pen. The code also bounds the size of detection between 30x30 and 80x80 
             pixels. With these conditions, small noises are neglected, but it also has the risk of not recognizing 
-            the pen due to large detectio threshold. This problem is solved by increasing the frame rate. 
+            the pen due to the large detection threshold. This problem is solved by increasing the frame rate. 
         </p>
 
         <p>
             <br>
-            When processessing color frames from depth camera at a frame rate of 60 fps,
-            the performance is better than running at 30 fps. However, more false detections are found in this case, 
-            so track function adds in another condition that if the current detection is around twice width or 
-            twice height pixels away from the previous detection, then this detection is considered incorrect. 
-            The imges belows show computer vision tracking a pen using color filtering at 60fps, Haar Cascade model 
+            When processing color frames from a depth camera at a frame rate of 60 fps,
+            the performance is better than running at 30 fps, but more false detections are found in this case. As a result, 
+            the track function adds in another condition that if detection is around twice width or 
+            twice height pixels away from its previous detection, then this detection is considered incorrect. 
+            The images below show computer vision tracking a pen using color filtering at 60fps, Haar Cascade model 
             at 30 fps, and 60 fps respectively.
         </p>
         
@@ -208,20 +208,32 @@
         </p>
         <img src="../img/portfolio/wc-simple-workflow.png" style="width:40%" >  
         <p>
-            To allow proper linking between different tasks, both Tracker and Classifier needs to have access to 
-            folders <i>user_images</i>, where writting images are stored. When user is done with writing, Tracker first croppes  
+            To allow proper linking between different tasks, both Tracker and Classifier need to have access to 
+            the folder <i>user_images</i>, where writing images are stored. When the user is done with writing, Tracker first crops 
             the screen based on where the writing is. Then, it stores the cropped frame as an image into <i>user_images</i> and calls
             function classify from Classifier. This function takes the image file name as an input so that when 
-            loading the data using UserImageDataSet loader, the correct image is extracted. When loading user inputs, images 
+            loading the data using <i>UserImageDataSet</i> loader, the correct image is extracted. When loading user inputs, images 
             are resized to 28x28 px to makes sure that writings of different sizes are also correctly processed. 
-            Other transforms are the same as in training. Lastly, the transformed data is input into the pre-trained PyTorch model 
-            to predict its class. 
+            Other transforms are the same as in training. Next, the transformed data is input into the pre-trained PyTorch model 
+            to predict its class. Finally, the prediction is sent back to Tracker to have it displayed on the screen.
+        </p>
+        <br>
+        <p>
+            When Tracker is tracking the pen, it is also waiting for user keyboard inputs. Options of these inputs include clear board, 
+            clear predictions, erase or write, save an image to classify or to the dataset, and redo false predictions. 
+            Other than the <i>UserImageDataSet</i>, the project also provides <i>UserKnownImageDataSet</i> for loading stored and labeled images. 
+            To use customized PyTorch model or Haar Cascade model, the project provides helper classes and functions for training and visualizing
+            the performance. More details can be found on the project GitHub page.
         </p>
 
         <hr class="para-break" data-content="  Related Links  " id="related-links">
         <p>
             <i class="fa fa-github"></i>
             <a class="i_link" href="https://github.com/aonai/winter_project_handwriting_camera" target="_blank" rel="noopener noreferrer"> Source Code</a>
+            <br>
+            
+            <i class="fa fa-file-archive-o"></i>
+            <a class="i_link" href="https://drive.google.com/file/d/1Rhdzq3cQDivl3OSlLLYgq3ii3eXRylLw/view?usp=sharing" target="_blank" rel="noopener noreferrer"> Testing Dataset </a>
         </p>
     </body>
  
