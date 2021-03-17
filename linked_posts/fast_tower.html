@@ -7,8 +7,19 @@
     </head>
 
     <nav class="navbar">
-        <a href="javascript:history.back()"><span>&#9733</span></a>
-    </nav>
+        <a href="/.."><i class="fa fa-home" ></i></a>
+    </nav>  
+
+    <nav class="navbar-menu">
+        <a href="#page-top">Back to Top</a>
+        <a href="#overview">Overview</a>
+        <a href="#overall-design">Overall Design</a>
+        <a href="#simulation">Simulation</a>
+        <a href="#computer-vision">Computer Vision</a>
+        <a href="#robot-manipulation">Robot Manipulation</a>
+        <a href="#related-links">Related Links</a>
+    </nav> 
+
 
     <body id="page-top" class="index">
         <h1 class='title'>Fast Tower</h1>
@@ -19,20 +30,20 @@
                 <div clsas="row">
                     <div class="col-lg-2 ">
                         <p>
-                            Skills:
+                            Skills:  
                             <br>
-                            Members: 
+                            Members:   
                             <br>
-                            Time:
+                            Time:  
                         </p>
                     </div>
                     <div class="col-lg-10 ">
                         <p>
-                            Baxter, ROS, MoveIt!, Apriltag
+                            Baxter, ROS, MoveIt!, Apriltag  
                             <br>
-                            Dimitrios Chamzas, Dongho Kang, Gabbie Wink
+                            Dimitrios Chamzas, Dongho Kang, Gabbie Wink  
                             <br>
-                            November, 2020
+                            November, 2020  
                         </p>
                     </div>
                 </div>
@@ -44,23 +55,87 @@
         allowfullscreen>
         </iframe>
 
-        <hr class="para-break" data-content="  Description  "><link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <hr class="para-break" data-content="  Overview  " id="overview">
         <p>
             This project is the final project of Embedded Systems in Robotics. Its goal is to control a Baxter robot 
             to stack a fixed number of cups into a tower. The tower is built on a table that is placed in front of Baxter. 
             The source code includes several different nodes to operate Baxter with or without computer vision and to build a 
-            ower out of 3, 6, and 10 cups. More detailed descriptions can be found on the project's GitHub page. To minimize 
-            challenges from vision detection and precise manipulation, this project is separated into two tasks. Starting with 
-            random cups placed in the middle of the table, task 1 needs to grab and place them at each side of the table in order.
-            Then, task2 needs to grab the sorted cups and place them back in the middle of the table to stack them into a tower. 
-            To avoid collision between the two arms, these two tasks are executed alternatively. Once one arm completes placing a cup,
-            it should move away from the middle of the table and leave workspace for the other arm. The image below shows how a 
+            ower out of 3, 6, and 10 cups. More detailed descriptions for each nodes can be found on the project's GitHub page. 
+        </p>
+
+        <hr class="para-break" data-content="  Overall Design  " id="overall-design">
+        <p>
+            To minimize challenges from vision detection and precise manipulation, this project is separated into two tasks. The image below shows how a 
             table is divided into the working area and sorted area.  
         </p>
         <img src="../img/portfolio/fast-tower-table.png" style="width:50%"> 
         <p>
             
-            For this project, my main job is to control both arms of Baxter to let them grab and place cups from one to another 
+            Starting with random cups placed in the working area, task 1 needs to grab and place them at each side of the table in order.
+        </p>
+        <img src="../img/portfolio/6-cups-sort.gif" style="width:50%"> 
+        <p>
+            
+            Then, task2 needs to grab the sorted cups and place them back in the middle of the table to stack them into a tower. 
+            To avoid collision between the two arms, these two tasks are executed alternatively. Once one arm completes placing a cup,
+            it should move away from the middle of the table and leave workspace for the other arm. 
+        </p>
+        <img src="../img/portfolio/6-cups-stack.gif" style="width:50%"> 
+
+        <p>
+            
+            The code for building a tower can be grouped into three main portions:
+            <a href="#simulation">simulation</a>, 
+            <a href="#computer-vision">computer vision</a>, 
+            <a href="#robot-manipulation">robot manipulation</a>.
+            My role in the team is to design and construct Baxter's motion to grab and place cups. 
+        </p>
+        
+        <hr class="para-break" data-content="  Simulation  " id="simulation">
+        <p>
+            Simulation of the project is completed in Gazebo. Before executing code on the real robot, running nodes in simulation
+            allows the team to run different test cases and visulize results. Cups inside the simulator are presented as cylinders. 
+            Their positions are also pre-defined to allow quick restart and switching between scenes (sort or stack).  
+        </p>
+        <img src="../img/portfolio/gazebo-view.png" style="width:30%">
+
+        <p>
+            When controlling the robot, Baxter's MoveIt scene is shown in rviz. At start of simulation, cups will also be added to
+            the scene as obstacles so that MoveIt will recognize the cups and execute proper collision detection. The image on the left 
+            below shows Baxter simulator grabbing and placing cups into a tower; the image on the right belows shows the simulator
+            finishing the tasks. The cup size in rviz is smaller than in Gazebo, specifically, it is smaller than the distance between 
+            gripper's paddles when closed. This is to ensure that rviz does not think Baxter is colliding with a cup while grabbing. 
+        </p>
+        <div class="container">
+            <div clsas="row">
+                <div class="col-lg-1 ">
+                </div>
+                <div class="col-lg-5 ">
+                    <img src="../img/portfolio/rviz-grab.png" style="width:84%">
+                </div>
+                <div class="col-lg-5 ">
+                    <img src="../img/portfolio/rviz-start.png" style="width:80%">
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <hr class="para-break" data-content="  Computer Vision  " id="computer-vision">
+        <p>
+            This project uses ROS AprilTag to detect position of cups in the real environment. The cameras that used for object detection
+            are the ones on Baxter's both arms. Each cup has an AprilTag attached to itself to indicate an unique number. 
+            The main camera to use in this project is the right arm camera. It needs to point downward to the table in order to 
+            properly detect the tags. As shown in the image below, once a tag is recognized, rviz will add a cylinder obstacle in rviz at the tag's position
+            in the environment. 
+
+        </p>
+        <img src="../img/portfolio/april-detect.png" style="width:60%">
+       
+        <hr class="para-break" data-content="  Robot Manipulation  " id="robot-manipulation">
+        <p>
+            My main job in this project is to control both arms of Baxter to let them grab and place cups from one to another 
             specified location. The locations are either pre-defined or provided by Apriltags depending on whether the node uses
             computer vision. The image below exhibits the logic of the robot's behaviors.
         </p>
@@ -94,18 +169,14 @@
         <p>
             However, path planning with pose target sometimes result in unexpected behavior. For instance,
             Baxter may rotate its arm by a full circle even if the task is to move a cup horizontally from left to right. Also, planners
-            may give a trajectory path too close to MoveIt objects leading to a collision at reality. This problem is fixed by adding more 
+            may give a trajectory path too close to MoveIt objects leading to a collision at reality. This problem is fixed by adding  
             larger thresholds at MoveIt. Nonetheless, these thresholds need to be smaller to allow proper collision detection for attaching 
             cup objects inside rviz. Rather than finding the right thresholds for all parameters, the team decides to generate all movements 
-            of Baxter only using cartesian planning. The revised code diagram is shown in the image below. 
+            of Baxter only using cartesian planning. The revised code workflow is shown in the image below. 
         </p>
         <img src="../img/portfolio/execute_cartesian_2.png" style="width:30%">
-        <p>
-            Tasks completed by other team members include gazebo simulation, computer vision using AprilTags, and integration of all 
-            components. Please refer to the project's GitHub page for more information. 
-        </p>
 
-        <hr class="para-break" data-content="  Related Links  ">
+        <hr class="para-break" data-content="  Related Links  " id="related-links">
         <p>
             <i class="fa fa-folder"></i>
             <a class="i_link" href="https://drive.google.com/drive/folders/1TNZ8SyosjOLlZyvqhP1VXR4JyEkqHliD?usp=sharing" target="_blank" rel="noopener noreferrer">Other Video Demos</a>
