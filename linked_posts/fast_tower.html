@@ -60,7 +60,7 @@
             This project is the final project of Embedded Systems in Robotics. Its goal is to control a Baxter robot 
             to stack a fixed number of cups into a tower. The tower is built on a table that is placed in front of Baxter. 
             The source code includes several different nodes to operate Baxter with or without computer vision and to build a 
-            ower out of 3, 6, and 10 cups. More detailed descriptions for each nodes can be found on the project's GitHub page. 
+            tower out of 3, 6, and 10 cups. More detailed descriptions for each node can be found on the project's GitHub page. 
         </p>
 
         <hr class="para-break" data-content="  Overall Design  " id="overall-design">
@@ -94,15 +94,15 @@
         <hr class="para-break" data-content="  Simulation  " id="simulation">
         <p>
             Simulation of the project is completed in Gazebo. Before executing code on the real robot, running nodes in simulation
-            allows the team to run different test cases and visulize results. Cups inside the simulator are presented as cylinders. 
+            allows the team to run different test cases and visualize results. Cups inside the simulator are presented as cylinders. 
             Their positions are also pre-defined to allow quick restart and switching between scenes (sort or stack).  
         </p>
         <img src="../img/portfolio/gazebo-view.png" style="width:30%">
 
         <p>
-            When controlling the robot, Baxter's MoveIt scene is shown in rviz. At start of simulation, cups will also be added to
+            When controlling the robot, Baxter's MoveIt scene is shown in rviz. At the start of a simulation, cups will also be added to
             the scene as obstacles so that MoveIt will recognize the cups and execute proper collision detection. The image on the left 
-            below shows Baxter simulator grabbing and placing cups into a tower; the image on the right belows shows the simulator
+            below shows the Baxter simulator grabbing and placing cups into a tower; the image on the right below shows the simulator
             finishing the tasks. The cup size in rviz is smaller than in Gazebo, specifically, it is smaller than the distance between 
             gripper's paddles when closed. This is to ensure that rviz does not think Baxter is colliding with a cup while grabbing. 
         </p>
@@ -124,10 +124,10 @@
 
         <hr class="para-break" data-content="  Computer Vision  " id="computer-vision">
         <p>
-            This project uses ROS AprilTag to detect position of cups in the real environment. The cameras that used for object detection
-            are the ones on Baxter's both arms. Each cup has an AprilTag attached to itself to indicate an unique number. 
-            The main camera to use in this project is the right arm camera. It needs to point downward to the table in order to 
-            properly detect the tags. As shown in the image below, once a tag is recognized, rviz will add a cylinder obstacle in rviz at the tag's position
+            This project uses ROS AprilTag to detect the position of cups in the real environment. The cameras used for object detection
+            are the ones on Baxter's arms. Each cup has an AprilTag attached to itself to indicate a unique number. 
+            The main camera to use in this project is the right arm camera. It needs to point down to the table to properly 
+            detect the tags. As shown in the image below, once a tag is recognized, rviz will add a cylinder obstacle in rviz at the tag's position
             in the environment. 
 
         </p>
@@ -142,7 +142,7 @@
         <img src="../img/portfolio/grab_and_place.png" style="width:50%">
         <p> 
             The image on the left below shows Baxter grabbing a sorted cup. The image on the right below shows Baxter 
-            placing the cup into the workstation. The movement of Baxter arm is controlled using ROS 
+            placing the cup into the workstation. The movement of Baxter's arm is controlled using ROS 
             <a target="_blank" rel="noopener noreferrer" href="http://docs.ros.org/en/hydro/api/baxter_interface/html/baxter_interface.gripper.Gripper-class.html#version_check">MoveIt</a>
             package for Baxter. The gripper is controlled using 
             <a target="_blank" rel="noopener noreferrer" href="http://docs.ros.org/en/hydro/api/baxter_interface/html/baxter_interface.gripper.Gripper-class.html#version_check">Baxter ROS interface</a>.    
@@ -167,7 +167,7 @@
         </p>
         <img src="../img/portfolio/execute_cartesian.png" style="width:50%" >
         <p>
-            However, path planning with pose target sometimes result in unexpected behavior. For instance,
+            However, path planning with pose target sometimes results in unexpected behavior. For instance,
             Baxter may rotate its arm by a full circle even if the task is to move a cup horizontally from left to right. Also, planners
             may give a trajectory path too close to MoveIt objects leading to a collision at reality. This problem is fixed by adding  
             larger thresholds at MoveIt. Nonetheless, these thresholds need to be smaller to allow proper collision detection for attaching 
