@@ -1,0 +1,212 @@
+<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/posts.css">
+    
+    <head>
+        <title>Myo Gesture Recognition</title>
+    </head>
+
+    <nav class="navbar">
+        <a href="/.."><i class="fa fa-home" ></i></a>
+    </nav>  
+
+    <nav class="navbar-menu">
+        <a href="#page-top">Back to Top</a>
+        <a href="#intro">Introduction</a>
+        <a href="#use-myo">Using Myo</a>
+        <a href="#3dc-result">3DC Result</a>
+        <a href="#myo-result">Myo Result</a>
+        <a href="#references">References</a>
+        <a href="#related-links">Related Links</a>
+    </nav> 
+
+
+    <body id="page-top" class="index">
+        <h1 class='title'>Myo Gesture Recognition</h1>
+
+        <hr class="star-primary">
+        <div class="under-title">
+            <div class="container">
+                <div clsas="row">
+                    <div class="col-lg-2 ">
+                        <p>
+                            Skills:  
+                            <br>
+                            Time:  
+                            <br>
+                            Note: 
+                        </p>
+                    </div>
+                    <div class="col-lg-10 ">
+                        <p>
+                            Pytorch, Myo
+                            <br>
+                            Spring, 2021  
+                            <br>
+                            This is still an ongoing project
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="para-break" data-content="  Introduction  " id="intro">
+        <p>
+            Surface electromyograms (sEMG) signals are often used with machine learning techniques to recognize hand 
+            gestures. This project aims at investigating the performance of Self-Calibrating Asynchronous Domain Adversarial Neural 
+            Network (SCADANN) on recognizing gestures from sEMG recorded across multiple days or even multiple subjects. 
+            <br>
+            <br>
+            Suguru Kanoga proved in the paper that reattachment of sEMG armband devices generally leads to 
+            lower classification accuracies, especially when the sensors are misplaced. If a model
+            is trained using only sEMG signals recorded on the first few days, errors can range from around 9% to 
+            30%<a href="#references">[1]</a>.
+            In order to decrease the classification errors, Ulysee Côté-Allard proposed SCADANN. This algorithm is developed based on 
+            Temporal-Spatial Descriptors (TSD) and Domain-Adversarial Neural Network (DANN). First, all training data are put 
+            into TSD to result in a set of weights. Then, DANN uses the first training session as a labeled source and others 
+            as the unlabeled target. After DANN calibrates the weights, SCADANN recalibrates them again using a labeled first 
+            session of training and several pseudo-labeled training sets
+            <a href="#references">[2]</a>.
+            Here, one session indicates either one wearing position
+            (for inter-day training) or one subject (for across subject training).
+            <br>
+            <br>
+            To get myself familiar with sEMG readings, I use 
+            <a href="https://github.com/dzhu/myo-raw" target="_blank" rel="noopener noreferrer">myo-raw</a> 
+            to collect a few datasets. One example segment window is shown in 
+            <a href="#use-myo">Using Myo</a>. Result of reusing the code provided by 
+            <a href="https://github.com/UlysseCoteAllard/LongTermEMG" target="_blank" rel="noopener noreferrer">Ulysee Côté-Allard</a> 
+            is shown in
+            <a href="#3dc-result">3DC Result</a>.
+            Result of applying SCADANN algorithm on 
+            <a href="https://github.com/Suguru55/Wearable_Sensor_Long-term_sEMG_Dataset" target="_blank" rel="noopener noreferrer">Kanoga's myo dataset</a>
+            is shown in 
+            <a href="#myo-result">Myo Result</a>.
+
+            
+        </p>
+        
+        <hr class="para-break" data-content="  Using Myo  " id="use-myo">
+        <p>
+            This project uses 
+            <a href="https://www.amazon.com/Thalmic-Labs-Gesture-Control-Presentations/dp/B00VHWBH02" target="_blank" rel="noopener noreferrer">myo armband </a>
+            to collect sEMG signals on the left forearm. 
+            Three sets of data are collected. Each dataset represents one wearing position: neutral, inward rotation, and outward
+            rotation. These positions are explained in Kanoga's paper and the picture below 
+            <a href="#references">[1]</a>.
+            Assuming that the neutral position is 
+            defined when I first put on the myo armband and use the myo sdk to calibrate it, then the inward and outward rotations
+            are around 8mm counter-clockwise and clockwise rotated from this first placement before recording. 
+            During each trial, five wave-out, 
+            or wrist extension (WE), motions are recorded. Each wave-out lasts around 2 seconds, and there is a 1 second rest period in 
+            between each motion. During the recording, my left forearm is placed similar to the demonstration shown below and is held
+            steady. 
+        </p>
+
+        <div class="container">
+            <div clsas="row">
+                <div class="col-lg-2 ">
+                </div>
+                <div class="col-lg-4 ">
+                    <img src="../img/portfolio/myo_pos.jpg" style="width:80%" >  
+                </div>
+                <div class="col-lg-4 ">
+                    <img src="../img/portfolio/myo_WE.png" style="width:60%" >  
+                </div>
+            </div>
+        </div>
+        <p>
+            One example segment is extracted from each dataset. The sampling frequency of myo armband is 200 Hz, so each 1.5s
+            window of signals has 300 readings. The images below show EMG and IMU readings of one segment of motion. As shown
+            in the plots, active sEMG signals are generally noisier when myo is placed on inward and outward rotation positions
+            than when it's placed at the neutral attachment. 
+        </p>
+        <img src="../img/portfolio/emg_waveout.jpg" style="width:80%">
+        <img src="../img/portfolio/imu_waveout.jpg" style="width:80%">
+       
+        
+        <hr class="para-break" data-content="  3DC Result  " id="3dc-result">
+        <p>
+            As explained in the 
+            <a href="#intro">introduction</a>, SCADANN is trained based on TSD and DANN models. Details of each model are explained 
+            in Ulysee's paper
+            <a href="#references">[2]</a>. The signals are processed into windows of size 150ms every 100ms and applied with feature
+            extraction functions proposed by Khushaba 
+            <a href="#references">[4]</a>. 
+            The image below shows the result of reusing Ulysee's code training inter-day data for three 
+            subjects in the Long-term 3DC Dataset
+            <a href="#references">[3]</a>. 
+            During the training, four sessions (or four different positions) are recorded for each participant, 
+            SCADANN uses the TSD model from the first session and previous DANN models (ie. the second and third DANN models if the fourth session is 
+            being trained). Stepping from TSD to DANN, and from DANN to SCADANN models, gesture recognition accuracies increase from 70% to 
+            76% and eventually to 78%. This trend indicates that SCADANN is feasible for increasing the performance of inter-day 
+            training within one subject of the 3DC dataset. 
+        </p>
+
+        <img src="../img/portfolio/3DC_results.jpg" style="width:100%">
+
+        <hr class="para-break" data-content="  Myo Result  " id="myo-result">
+        <p>
+            To test that SCADANN also works for Kanoga's myo datasets, I modified the way to process the data into a similar
+            shape used in the source code. Instead of defining each day as one session, I include all readings from 
+            the same position (neutral, inward, and outward rotation) in one session. This way, each session contains 10 days (4 
+            trails each day) of training data. The signals are processed into windows of size 250ms every 50ms and applied with 
+            Khushaba's feature extraction functions
+            <a href="#references">[4]</a>. With five participants and three positions, the resulting training examples should have 
+            shape (5, 3, 40, 572, 252) and the resulting training labels should have shape (5, 3, 40, 572). Another modification 
+            to the source code is that the variable percentage_same_gesture_stable, or how accurate a segment of stable examples
+            should be in order to be pseudo labeled, is changed to 75% to allow sufficient, stable, and accurate training data for SCADANN. 
+            The image below shows the result of training inter-day sEMG readings within each subject. The performance is similar
+            to the 3DC result. The plots also show an 
+            increase in recognition accuracies, so SCADANN is feasible for training the myo dataset across days. 
+        </p>
+        
+        <img src="../img/portfolio/myo_results.jpg" style="width:100%" >  
+        <p>
+            It is possible to apply SCADANN algorithm across subjects. To test the performance in this case, I rewrote the way 
+            to process the myo datasets. Previously, the sEMG signals are grouped based on positions. To train the models across 
+            subjects, one session now contains all readings from the same participant. The same data processing methods are 
+            applied to these groups of signals. The resulting training examples should have shape (3, 5, 40, 572, 252), and the 
+            resulting training labels should have shape (3, 5, 40, 572). percentage_same_gesture_stable is still 75% for across
+            subject training. The image below shows the result of applying TSD, DANN, and SCADANN in sequence within each session. 
+            The plots have a similar increasing trend in performance. Accuracies increase from 54% to 60% and eventually to 62%.
+            The resulting overall accuracy is lower than inter-day 
+            training. Unlike misplacement in device reattachment, the increase in classifier error is worse if a model 
+            trained for one person is used on another subject. In conclusion, SCADANN is feasible in increasing the performance 
+            of across-subject training; however, the resulting accuracies on each subject are dependent on how well the first model 
+            (the first set of TSD weights that use only one participant data) can predict signals from other subjects.
+        </p>
+        <img src="../img/portfolio/myo_results_across_sub.jpg" style="width:100%" >  
+        
+
+        <hr class="para-break" data-content="  References  " id="references">
+        <p style="font-size:14px">
+            [1] Kanoga, Suguru & Kanemura, Atsunori & Asoh, Hideki. (2020). Are armband sEMG devices dense enough for long-term use?—Sensor placement shifts cause significant reduction in recognition accuracy. Biomedical Signal Processing and Control. 60. 101981. 10.1016/j.bspc.2020.101981. 
+            <br>
+            [2] U. Côté-Allard et al., "Unsupervised Domain Adversarial Self-Calibration for Electromyography-Based Gesture Recognition," in IEEE Access, vol. 8, pp. 177941-177955, 2020, doi: 10.1109/ACCESS.2020.3027497.
+            <br>
+            [3] Ulysse Côté-Allard, Gabriel Gagnon-Turcotte, Angkoon Phinyomark, Kyrre Glette, Erik Scheme, François Laviolette, Benoit Gosselin, December 21, 2019, "Long-term 3DC Dataset", IEEE Dataport, doi: https://dx.doi.org/10.21227/f5ne-ya31.
+            <br>
+            [4] R. N. Khushaba, A. H. Al-Timemy, A. Al-Ani and A. Al-Jumaily, "A Framework of Temporal-Spatial Descriptors-Based 
+    Feature Extraction for Improved Myoelectric Pattern Recognition," in IEEE Transactions on Neural Systems and
+    Rehabilitation Engineering, vol. 25, no. 10, pp. 1821-1831, Oct. 2017, doi: 10.1109/TNSRE.2017.2687520.
+        </p>
+        <hr class="para-break" data-content="  Related Links  " id="related-links">
+        <p>
+            <i class="fa fa-github"></i>
+            <a class="i_link" href="https://github.com/UlysseCoteAllard/LongTermEMG" target="_blank" rel="noopener noreferrer"> Long-term 3DC code</a>
+            <br>
+            <i class="fa fa-github"></i>
+            <a class="i_link" href="https://github.com/Suguru55/Wearable_Sensor_Long-term_sEMG_Dataset" target="_blank" rel="noopener noreferrer"> Long-term Myo code</a>
+            <br>
+            <i class="fa fa-github"></i>
+            <a class="i_link" href="https://github.com/aonai/msr_final_notes" target="_blank" rel="noopener noreferrer"> My Notes</a>
+            <br>
+            <i class="fa fa-github"></i>
+            <a class="i_link" href="https://github.com/aonai/long_term_EMG_myo" target="_blank" rel="noopener noreferrer"> My Long-term Myo Code</a>
+        </p>
+    </body>
+ 
+
+</html>  
