@@ -129,7 +129,8 @@
             For this project, blocking commands perform better than unblocking commands. Below is an example of 
             running unblocking commands at 50Hz. The concept in control scheme uses relative angles. Given this situation,
             everytime a current joint poisition is updated in the reality, there is a small shift in radian. Having
-            such error ran at high frequency lets the drifting down behavior dominates the robot controls. Therefore, 
+            such error ran at high frequency does not leave the robot to have enough time for execution and thus 
+            lets the drifting down behavior dominate the robot controls. Therefore, 
             enable joint-to-joint control to the robot, blocking commands are choosen here. Though the robot motion is 
             not as smooth as the arm movements, setting proper command frequency and listening period will optimize the 
             controls and allow a user to grab and place an object near by as shown above. 

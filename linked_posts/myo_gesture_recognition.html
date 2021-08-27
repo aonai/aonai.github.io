@@ -82,7 +82,7 @@
             Result of applying SCADANN algorithm on 
             <a href="https://github.com/Suguru55/Wearable_Sensor_Long-term_sEMG_Dataset" target="_blank" rel="noopener noreferrer">Kanoga's myo dataset</a>
             is shown in 
-            <a href="#myo-result">Myo Result</a>.
+            <a href="#myo-result">Myo Result</a> and the sections. 
 
             
         </p>
@@ -135,7 +135,7 @@
             extraction functions proposed by Khushaba 
             <a href="#references">[4]</a>. 
             The image below shows the result of reusing Ulysee's code training inter-day data for three 
-            subjects in the Long-term 3DC Dataset
+            subjects in the long-term 3DC dataset
             <a href="#references">[3]</a>. 
             During the training, four sessions (or four different positions) are recorded for each participant, 
             SCADANN uses the TSD model from the first session and previous DANN models (ie. the second and third DANN models if the fourth session is 
@@ -148,74 +148,70 @@
 
         <hr class="para-break" data-content="  Myo Result  " id="myo-result">
         <p>
-            To test that SCADANN also works for Kanoga's myo datasets, I modified the way to process the data into a similar
-            shape used in the source code. Instead of defining each day as one session, I include all readings from 
-            the same position (neutral position, inward, and outward rotation) in one session. This way, each session contains 10 days (4 
-            trails each day) of training data. The signals are processed into windows of size 250ms every 50ms and applied with 
-            Khushaba's feature extraction functions
-            <a href="#references">[4]</a>. Another modification to the source code is that the variable percentage_same_gesture_stable, 
-            or how accurate a segment of stable examples
-            should be in order to be pseudo labeled, is changed to 75% to allow sufficient, stable, and accurate training data for SCADANN. 
-            The image below shows the result of training inter-day sEMG readings within each subject. The performance is similar
-            to the 3DC result. Training across days, locations, and subjects all show increasing trends from TSD to SCADANN, 
-            so this algorithm is feasible for training long-term sEMG signals. 
+            To test that SCADANN also works for Kanoga's myo datasets, I modified the way to process the data 
+            into a similar shape used in the source code. When training for inter-day cases, each session in a subject's dataset 
+            represents one day. To train across wearing locations and subjects, instead of defining each day as one session, I include all
+            readings from the same position (neutral position, inward, and outward rotation) in one session. This way, 
+            each session contains 10 days (4 trails each day) of training data and has a sufficient amount of training examples. The signals are processed into windows of 
+            size 250ms every 50ms and applied with Khushaba's feature extraction functions <a href="#references">[4]</a>. Another modification to the 
+            source code is that the variable percentage_same_gesture_stable, or how accurate a segment of stable examples 
+            should be in order to be pseudo labeled, is changed to 75% to allow sufficient, stable, and accurate training 
+            data for SCADANN. The image below shows the result of training inter-day, inter-location, and inter-subject sEMG 
+            readings. The performance is similar to the 3DC result. All possible cases show increasing trends from TSD to 
+            SCADANN, so Ulysee Côté-Allard's unsupervised learning algorithm is feasible for training long-term sEMG recorded 
+            from a low-end wearable sensor.
         </p>
         <img src="../img/portfolio/myo_overall_improvement.jpg" style="width:50%" >  
 
         <hr class="para-break" data-content="  Across Days  " id="across-days">
         <p>
-            To train the models across days, I rewrote the way to process the myo datasets. 
-            By default, trials recorded when wearing sensor at the same locations are lumped together. 
-            One session now only includes trials on one day. This means that SCADANN is trained for a total of 
-            10 session, or 10 days. To have the train dataset follows a similar pattern, across day training is applied to 
-            one subject and one location at a time. The image below shows the result of applying TSD, DANN, and SCADANN to 
-            dataset of five subjects wearing sensor at the neutral position. 
+            To train the models across days, one session now only includes trials on one day. This means that 
+            SCADANN is trained for a total of 10 sessions or 10 days. To have the training dataset follow a 
+            similar pattern, across-day training is applied to one subject and one location at a time. The image 
+            below shows the result of applying TSD, DANN, and SCADANN to a dataset of five subjects wearing myo at 
+            the neutral position.
         </p>
         <img src="../img/portfolio/myo_across_days.jpg" style="width:80%" >  
 
         <p>
             Looking only at the average accuracy of individual participants across all days above, 
             overall and most individual accuracies are increasing (the overall accuracy increases from 66% to 74%), 
-            so SCADANN is feasible in improving accuracy when trained across days.
-            However, SCADANN does not improve accuracy when training for subject_0 on day 1 and 2; accuracies 
-            decrease by 2.2% and 1.2% respectively. Looking closely at the gestures accuracies, 
-            some gestures are not recognizable by the model. For instance, when testing
-            accuracy of gesture 4 (UD) for subjnect_0 across 10 days. Accuracies for day 1, 2, 3, 4, and 7 decreases 
-            when from TSD to SCADANN. Occasionally, SCADANN increases gesture accuracy (e.g. accuracy increases from 
-            27% to 77% when trained from DANN to SCADNN). Notice that the clipping percentage for SCADANN is set to be 
-            75%, so it is reasonable that certain gestures with low accuracies will result in low performance as well. 
-            Another for the decreasing trend may be that the dataset is not 
-            sufficient for training a robust model. The total number of trials per wearing location is 40. 
-            If distributing these trials among 10 days, each day will only include 4 trials. This means that
-            the model is receiving a bad dataset. Regardless, SCADANN still proves to have a better performance
-            when all tests are considered
+            so SCADANN is feasible in improving accuracy when trained across days. In the worst cases, 
+            SCADANN does not improve accuracy when training for subject_0 on day 1 and 2; accuracies decrease by 
+            2.2% and 1.2% respectively. Looking closely at the gestures accuracies, some gestures are not recognizable 
+            by the model. For instance, when classifying gesture 4 (UD) for subjnect_0 across 10 days. Accuracies 
+            for days 1, 2, 3, 4, and 7 decrease from TSD to SCADANN. Occasionally, SCADANN increases gesture accuracy 
+            (e.g. accuracy increases from 27% to 77% when training from DANN to SCADNN). Notice that the clipping 
+            percentage for SCADANN is set to be 75%, so it is reasonable that certain gestures with low base accuracies 
+            will result in low performance. Another reason for the decreasing trend may be that the dataset is not 
+            sufficient for training a robust model. The total number of trials per wearing location is 40. If distributing 
+            these trials among 10 days, each day only includes 4 trials. This means that the model is receiving a bad 
+            dataset. Regardless, SCADANN still proves to have a better performance when all tests are considered. 
         </p>
         <img src="../img/portfolio/across_days_g4.jpg" style="width:100%" >  
 
         <hr class="para-break" data-content="  Across Locations  " id="across-locs">
         <p>
-            When training the long-term myo dataset across locations, SCADANN is using weights from the previous location 
-            (in order of neutral position, inward, and outward) on the same subject. Below is a plot of testing accuracies 
-            of applying TSD, DANN, and SCADANN in sequence within each location. The overall accuracy increases from 72% 
-            to 79%), so SCADANN is feasible in improving accuracy when training across wearing locations. The overall acurracy 
-            for inter-location training is generally better than other cases. Though wearing location is to decrease the 
-            model performance, it seems to have less effect than other controlling factor such as subjects and days. 
+            When training the long-term myo dataset across locations, SCADANN uses weights from the previous 
+            location (in order of neutral position, inward, and outward rotation) on the same subject. Below is 
+            a plot of testing accuracies of TSD, DANN, and SCADANN models. The overall accuracy increases from 72% 
+            to 79%, so SCADANN is feasible in improving accuracy when training across wearing locations. The overall 
+            accuracy for inter-location training is generally better than in other cases. Though wearing location is to 
+            decrease the model performance, it seems to have less effect than other controlling factors such as subjects and days.
         </p>
         <img src="../img/portfolio/myo_across_loc.jpg" style="width:80%" >  
 
         <hr class="para-break" data-content="  Across Subjects  " id="across-subs">
         <p>
-            It is possible to apply SCADANN algorithm across subjects. To test the performance in this case, I rewrote the 
-            way to process the myo datasets. Previously, the sEMG signals are grouped based on positions. To train the models 
-            across subjects, one session now contains all readings from the same participant when wearing myo at the 
-            same location.  To cover all possible cases,
-            training datasets are ordered such that the first group includes signals from a starting subject. 
-            Each subject's model is trained based on the previous subject's model. That is, if the starting subject is subject_0,
-            then the following models are trained based on weights for subject_0, subject_1, subject_2, and subject_3 in sequence. 
-            The image below shows the 
-            result of TSD, DANN, and SCADANN models for each subject when they are trained starting from subject_0.
-            The plots have a similar increasing trend in performance. The overall accuracy increases from 54% 
-            to 61% and eventually to 63%. 
+            To test the performance of SCADANN in inter-subject cases, I rewrote the way to process the myo datasets. 
+            Previously, the sEMG signals are grouped based on positions. To train the models across subjects, one session 
+            now contains all readings from the same participant when wearing myo at the same location. To cover all possible 
+            cases, training datasets are ordered such that the first group includes signals from a selected starting subject. 
+            Each subject's model is trained based on the previous subject's weights. That is, if the starting subject is 
+            subject_2, then the following models are trained based on weights for subject_2, subject_3, subejct_4, and 
+            subejct_0 in sequence. The image below shows the result of TSD, DANN, and SCADANN models for each subject when 
+            the training starts from subject_0. The plots have a similar increasing trend in performance. The overall accuracy 
+            increases from 54% to 61% and eventually to 63%. 
         </p>
         <img src="../img/portfolio/myo_across_subs.jpg" style="width:80%" >  
         <p>
@@ -233,29 +229,28 @@
         <hr class="para-break" data-content="  ConvNet vs. TSD  " id="convnet-vs-tsd">
         <p>
             Given previous results, a conclusion for training SCADANN is that the base model needs to be good at 
-            predicting the following models. To prove it, SCADANN trained based on TSD is compared to results of 
-            SCADANN when it's trained based on Convolutional Network (ConvNet) across wearing locations. 
-            As shown in the plot below, TSD as a base model has a better performance than ConvNet.  
+            predicting the following models. To prove it, SCADANN trained based on TSD is compared to results of SCADANN 
+            when it's trained based on Convolutional Network (ConvNet) on subject_0 across wearing 
+            locations. As shown in the plot below, TSD as a base model has a better performance than ConvNet.
         </p>
         <img src="../img/portfolio/myo_convnet_vs_tsd.jpg" style="width:60%" > 
         <p>
-            Looking closer to accuracies for each wearing location, the biggest increase in performance happens
-            from TSD to SCADANN at wearing location 2 (from 65% to 76%), 
-            whereas the smallest increase happens at wearing location 1 of the same training direction 
-            (from 69% to 73%). Similarly, SCADANN trained based on ConvNet 
-            increases by 11% (from 53% to 64%) at wearing location 1, but it only increases by 6% 
-            (from 57% to 63%) at wearing location 2. So, it is possible for SCADANN to largely increase 
-            accuracy of one sesssion while keeping a low overall accuracy. However, considering the resulting
-            SCADANN performance, it is best to start from a model with good testing accuracies. 
+            Looking closer to accuracies for each wearing location, the biggest increase in performance happens 
+            from TSD to SCADANN at outward rotation (from 65% to 76%), whereas the smallest increase happens at inward 
+            rotation of the same training direction (from 69% to 73%). Similarly, SCADANN trained based on ConvNet 
+            increases by 11% (from 54% to 64%) at inward rotation, but it only increases by 6% (from 57% to 63%) at 
+            outward rotation. So, it is possible for SCADANN to largely increase the accuracy of one session while keeping 
+            a low overall accuracy. However, considering the resulting SCADANN performance, it is best to start from a 
+            model with good testing accuracies.
         </p>
         <img src="../img/portfolio/myo_convnet_vs_tsd_details.jpg" style="width:80%" > 
 
         <p>
-            In conclusion, SCADANN can improve accuracy in classifying gestures recorded by low-end and 
-            low-frequency wearable sensors. To optimize the final performance of the model, the first base 
-            model should be trained using a good algorithm and a good dataset. That is, the algorithm should 
-            be suitable for training predicting gestures from sEMG signals, and the dataset should include enough 
-            amount of recording trails.
+            In conclusion, SCADANN can improve accuracy in classifying gestures recorded by 
+            low-end and low-frequency wearable sensors. To optimize the final performance of the model, 
+            the first base model should be trained using a good algorithm and a good dataset. That is, the 
+            algorithm should be suitable for predicting gestures from sEMG signals, and the dataset should 
+            include enough amount of recording trials.
         </p>
 
         <hr class="para-break" data-content="  References  " id="references">
@@ -279,10 +274,10 @@
             <a class="i_link" href="https://github.com/Suguru55/Wearable_Sensor_Long-term_sEMG_Dataset" target="_blank" rel="noopener noreferrer"> Long-term Myo Code</a>
             <br>
             <i class="fa fa-github"></i>
-            <a class="i_link" href="https://github.com/aonai/long_term_EMG_myo" target="_blank" rel="noopener noreferrer"> Long-Term Myo Library</a>
+            <a class="i_link" href="https://github.com/aonai/long_term_EMG_myo" target="_blank" rel="noopener noreferrer"> My Long-term Myo Library</a>
             <br>
             <i class="fa fa-github"></i>
-            <a class="i_link" href="https://github.com/aonai/long_term_myo_notes" target="_blank" rel="noopener noreferrer"> Long-Term Myo Notes </a>
+            <a class="i_link" href="https://github.com/aonai/long_term_myo_notes" target="_blank" rel="noopener noreferrer"> My Long-term Myo Notes </a>
         </p>
     </body>
  

@@ -325,7 +325,7 @@ section.success .container p, a {
 @media (min-width: 640px) {
     .portfolio-flex-grid .portfolio-flex-row {
       display: flex;
-      flex-flow: row wrap-reverse;
+      flex-flow: row wrap;
       align-items: stretch;
       justify-content: space-between;
     }
