@@ -13,7 +13,7 @@
 
     <nav class="navbar-menu">
         <a href="#page-top">Back to Top</a>
-        <a href="#overview">Overview</a>
+        <a href="#intro">Introduction</a>
         <a href="#control-scheme">Control Scheme</a>
         <a href="#connect-myo">Connect Myo</a>
         <a href="#control-arm">Control Robot Arm</a>
@@ -52,7 +52,10 @@
 
         <hr class="para-break" data-content="  Introduction  " id="intro">
         <p>
-            The goal of this project is to control a PincherX 100 Robot Arm using two Myo armbands. 
+            The goal of this project is to control a 
+            <a href="https://www.trossenrobotics.com/pincherx-100-robot-arm.aspx" target="_blank" rel="noopener noreferrer">PincherX 100 Robot Arm </a> 
+            using two 
+            <a href="https://www.amazon.com/Thalmic-Labs-Gesture-Control-Presentations/dp/B00VHWBH02" target="_blank" rel="noopener noreferrer">myo armbands</a>. 
             The joints of the robot are controlled through right arm shoulder and elbow. 
             The gripper is controlled through right-hand gestures. Running the project allows a user 
             to grab and place an object that is close by. This project also provides an option to customize 
@@ -61,52 +64,45 @@
 
         <hr class="para-break" data-content="  Control Scheme  " id="control-scheme">
         <p>
-            To fully simulate right arm motion, two myo armbands are placed on a subject (one on lower, and one 
-            on upper right arm). Then, given orientation messages from the myos, this project maps each arm 
-            to one robot joint. PincherX 100 has 5 dof (including its gripper). Each of them maps to waist,
-            shoulder, elbow, wrist, and gripper/hand joints respectivley. Having this project runs successfully 
-            suggests that a similar algorithms can be applied to higher dof robot arm. Instead of mapping joint to joint,
-            one can have more options in the controlling scheme such as making use of rotation of arm (i.e. roll angle). 
+            To fully simulate right arm motion, two myo armbands are placed on a subject (one on the lower, 
+            and one on the upper right arm). Then, given orientation messages from the myos, this project 
+            maps each arm to one robot joint. PincherX 100 has 5 dof (including its gripper). Each maps to 
+            waist, shoulder, elbow, wrist, and gripper/hand joints respectively. Having this project runs 
+            successfully suggests that a similar algorithm can be applied to a higher dof robot arm. Instead 
+            of mapping joint to joint, one can have more options in the controlling scheme such as making use 
+            of the rotation of arm (i.e. roll angle).
         </p>
         <img src="../img/portfolio/control_scheme.png" style="width:30%">
         <p>
             The table below explains the controlling process. The angles mentioned are radian differences 
             between previous and current readings. A key concept in this project is to listen to orientation 
-            and control robot in a relative manner. When initialized, the robot starts at its HOME position. 
-            From there, the relative motion from previous to current reading moves the robot from current to its 
-            next position. In other words, the command angles sent to the robot are sums of the tf transofrmations 
+            and control the robot in a relative manner. When initialized, the robot starts at its HOME position. 
+            From there, readings of relative motion from previous to current arm move the robot from current to 
+            its next position. In other words, the command angles sent to the robot are sums of the tf transformations 
             (listening at 50Hz) recorded during a period of time. 
-            Besides subscribing to tf frames, this project listens to right-hand gesture predictions. The primarly model
+            Besides subscribing to tf frames, this project listens to right-hand gesture predictions. The primary model
             is trained using 
-            <a href="https://github.com/aonai/long_term_EMG_myo" target="_blank" rel="noopener noreferrer">long-term myo library </a>
-            .  The model used in this project is trained from subject_0
-            and five gestures: rest, wrist flexion, forearm pronation & wrist extension , radial deviation, and ulnar deviation. 
-            These gestures are selected so that they will not be easily confused with each other. 
-            Nonetheless, given the limited amount of dataset, the default classifier is used as
-            a confirmation of whether the predicted gesture is correct.
-            Similar to calculating controlling angles, 
-            the predictions are recorded in the same period of time and a dominant gesture (one that exists in 90% of 
-            the recording) is found before generating commands. 
-            When the upper biceps are activated, control gains of waist, shoulder, and elbow joints 
-            are lowered to enable more precise control. Being activated means that mean plus standard deviaiton of sEMG readings 
-            from the upper myo exceeds certain threshold, which is defined as the sEMG mean plus standard deviation when arm is at rest. 
+            <a href="https://github.com/aonai/long_term_EMG_myo" target="_blank" rel="noopener noreferrer">my long-term myo library</a>. 
+            The model used in this project is trained from subject_0 and five gestures: rest, wrist flexion, forearm 
+            pronation & wrist extension, radial deviation, and ulnar deviation. These gestures are selected so that 
+            they will not be easily confused with each other. Nonetheless, given the limited amount of dataset, performance 
+            of this customized model is low. To improve accuracy, the default classifier is used as a confirmation of whether 
+            the predicted gesture is correct. Similar to calculating controlling angles, the predictions are recorded in 
+            the same period of time and a dominant gesture (one that exists in 90% of the recording) is found before generating 
+            commands. When the upper biceps are activated, control gains of waist, shoulder, and elbow joints are lowered to 
+            enable more precise control. Being activated means that the mean plus standard deviation of sEMG readings from the 
+            upper myo exceeds a certain threshold, which is defined as the sEMG mean plus standard deviation when right arm is at rest.
         </p>
         <img src="../img/portfolio/control_scheme_table.png" style="width:80%">
-
-        <p>
-            PincherX 100 has 5 dof (including its gripper). Having this project runs successfully suggests 
-            that a similar algorithms can be applied to higher dof robot arm. Instead of mapping joint to joint,
-            one can have more options in the controlling scheme such as making use of rotation of arm. 
-        </p>
         
         <hr class="para-break" data-content="  Connect Myo  " id="connect-myo">
         <p>
             The image below shows a demonstration of two myos simulating right arm movements. 
-            The purple IMU and yellow Pose belongs to lower myo. The orange IMU and green Pose belongs to upper myo.
+            The purple IMU and yellow Pose belongs to lower myo. The orange IMU and green Pose belong to upper myo. 
             While developing tf from myo messages, I found that the simulated arms are often misaligned. The degree of 
-            mis-alignment is random, but it is likely due to random wearing location of the myos. Since it is impossible 
-            to wear the sensors at the exact same location, an align service is setup to add in some threshold and to 
-            align the simulated arms. 
+            misalignment is random, but it is likely due to the random wearing location of the myos. Since it is impossible 
+            to wear the sensors at the same location, an alignment service is set up to add in some threshold and to align 
+            the simulated arms. In such a way, the markers in rviz best represent the right arm pose in reality. 
         </p>
         <img src="../img/portfolio/listen_myo.gif" style="width:80%">
        
@@ -126,14 +122,16 @@
         <img src="../img/portfolio/free.gif" style="width:80%">
 
         <p>
-            For this project, blocking commands perform better than unblocking commands. Below is an example of 
-            running unblocking commands at 50Hz. The concept in control scheme uses relative angles. Given this situation,
-            everytime a current joint poisition is updated in the reality, there is a small shift in radian. Having
-            such error ran at high frequency does not leave the robot to have enough time for execution and thus 
-            lets the drifting down behavior dominate the robot controls. Therefore, 
-            enable joint-to-joint control to the robot, blocking commands are choosen here. Though the robot motion is 
-            not as smooth as the arm movements, setting proper command frequency and listening period will optimize the 
-            controls and allow a user to grab and place an object near by as shown above. 
+            For this project, blocking commands perform better than unblocking commands. Below is an 
+            example of running unblocking commands at 50Hz. The concept in the control scheme uses relative angles. 
+            Given this situation, every time a current joint position is updated in the reality, there is a small 
+            shift in radian. Having such an error ran at high frequency does not leave the robot to have enough time 
+            for execution and thus lets the drifting down behavior dominate the robot controls. Lowering the command 
+            publishing frequency would mean having the robot execute trajectories in segments, a way that is similar 
+            to blocking commands. Therefore, to enable joint-to-joint control to the robot, blocking commands are chosen 
+            here. Though the robot motion is not as smooth as the arm movements, setting proper command frequency and 
+            listening period will optimize the controls and allow a user to grab and place an object nearby as shown above.
+    
         </p> 
         <img src="../img/portfolio/unblock.gif" style="width:80%">
 
