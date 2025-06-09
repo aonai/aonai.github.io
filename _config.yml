@@ -2,7 +2,7 @@
 title: Sonia Yuxiao Lai
 email: yuxiaolai2021@u.northwestern.edu
 phone-number: 847-915-0318
-url: https://ian-goode.github.io
+url: https://aonai.github.io
 description: "Welcome to my portfolio page. You can explore my recent works here."
 keywords: "Yuxiao Lai"
 introduction: "System Analysis Engineer at Wal Fuel Systems USA INC."
@@ -33,7 +33,7 @@ color:
 
 # Footer settings
 footer:
-  copyright: Dr. Henry Jekyll
+  copyright: Sonia Yuxiao Lai
   mail: Mailing Address
   social: Around the Web
   contacts: 
@@ -44,14 +44,16 @@ social:
     url: https://www.linkedin.com/in/yuxiao-sonia-lai-b22291195
   - title: github
     url: https://github.com/aonai
+  - title: google-scholar
+    url: https://scholar.google.com/citations?user=iYGQcAsAAAAJ&hl=en
 
 # Postal address (add as many lines as necessary)
 address:
-  - line: Yuxiao Lai, 633 Clark Street
-  - line: Evanston, IL 60208
+  - line: 
+  - line: 
 
 # Credits content
-# credits: 'Freelancer is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.'
+credits: 'Freelancer is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.'
 
 # Build settings
 markdown: kramdown
