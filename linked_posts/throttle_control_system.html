@@ -1,0 +1,130 @@
+<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/posts.css">
+    
+    <head>
+        <title>Throttle Control System</title>
+    </head>
+
+    <nav class="navbar">
+        <a href="/.."><i class="fa fa-home" ></i></a>
+    </nav>  
+
+    <nav class="navbar-menu">
+        <a href="#page-top">Back to Top</a>
+        <a href="#intro">Introduction</a>
+        <a href="#system-model">System Model</a>
+        <a href="#controls-algorithm">Controls Algorithm</a>
+        <a href="#test-results">Test Results</a>
+    </nav> 
+
+    <body id="page-top" class="index">
+        <h1 class='title'>Throttle Control System and Method of Operation</h1>
+
+        <hr class="star-primary">
+        <div class="under-title">
+            <div class="container">
+                <div clsas="row">
+                    <div class="col-lg-2 ">
+                        <p>
+                            Skills:  
+                            <br>
+                            Time:  
+                        </p>
+                    </div>
+                    <div class="col-lg-10 ">
+                        <p>
+                            MATLAB Coder, System Simulation, Controls
+                            <br>
+                            2023-2024
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="para-break" data-content="  Introduction  " id="intro">
+        <p>
+            Many industries utilize throttle valves to regulate the flow
+            of a fluid. One particular application is a fuel cell, which is
+            an electrochemical device that combines hydrogen fuel with
+            oxygen to produce electricity. The flow of the gaseous
+            and/or liquid fluids must be regulated to ensure a chemical
+            reaction occurs that produces the electricity. As such, the
+            ability to accurately and quickly control the fluid flow is
+            desirable.
+            The goal of this project is to increase the accuracy of a throttle valve with only one 
+            positional sensor to within 2° and reduce its response time to below 0.2 seconds, 
+            whereas other competitors aim for accuracy worse than 2° and response times slower than 0.5 seconds. 
+            Some challenges in this project include strong nonlinearities in the control system, uncertainties 
+            in system parameters, and aggressive requirements for both static and dynamic responses. Furthermore,
+             the robustness of the resulting controller needs to be verified to meet all industrial standards.
+        </p>
+
+        <hr class="para-break" data-content="  System Model  " id="system-model">
+        <p>
+            Suppose the throttle control system for a vehicle under design includes a controller comprising at
+            least one processor and at least one memory unit. This valve allows electronic communication with
+            the controller to move between multiple positions. The processor is programmed to compare
+            the input target positional signal and the detected position signal, then execute the controller to
+            select an output signal for the throttle valve.
+            To add more detail, the output signal controls the torque responsible for moving the throttle to a position.
+            When the throttle is held in place, it can be assumed that motor torque and load torque are approximately balanced.
+            The controller needs to consider an estimated relationship between the output signal and
+            throttle acceleration so that it can better understand the system.
+        </p>
+        <img src="../img/portfolio/patent_sys_model.PNG" style="width:60%">
+        <p>
+            Kalman Filtering is often used to limit the effect of sensor noises on measurements <a href="#references">[1]</a>.
+            For this application, detected position signals suffer from noise caused by electromagnetic interference and heat, 
+            which reduces the accuracy and smoothness of velocity. With the help of a Kalman filter, the processor is 
+            able to estimate the true state of the throttle, select more reasonable velocity inputs, and make the controller 
+            more robust when handling velocity-related logic.
+        </p>
+        
+        <hr class="para-break" data-content="  Controls Algorithm  " id="controls-algorithm">
+        <p>
+            Fuzzy control is a process that mimics human reasoning to map inputs to an output. 
+            It involves categorizing input values under different conditions, 
+            applying percentage-based logic, and producing a non-crisp (fuzzy) response to a given situation <a href="#references">[2]</a>. 
+            Note that the motor used in a throttle system exhibits high nonlinearity and damping, 
+            meaning the throttle will move differently when output signals are the same but initial positions differ. 
+            Therefore, fuzzy rules need to account for varying conditions across different combinations of acceleration, velocity, and position.
+        </p>
+        <img src="../img/portfolio/patent_fig2.PNG" style="width:60%">
+        <p>
+            The processor is programmed to apply a first-stage fuzzy control acceleration based on the output signal 
+            to the throttle valve, moving it toward the target position. Then, a second stage applies brake deceleration 
+            to slow the throttle valve as it approaches the target. Finally, the controller applies a second-stage fuzzy 
+            control acceleration to re-accelerate the throttle valve toward the target position.
+        </p>
+        
+        <hr class="para-break" data-content="  Test Results  " id="test-results">
+        <p>
+            As a result, the process is able to reach the target valve position with an accuracy of 1° and a response 
+            time of 0.15 seconds. Successfully meeting these requirements allows for the production of a throttle control 
+            system with a similar setup in a more economical way. That is, one can achieve the same accuracy
+            and response time as higher-end merchandise using only one positional sensor in combination with the proposed control algorithm.
+        </p>
+        <img src="../img/portfolio/patent_merg.png" style="width:80%">        
+        
+        <hr class="para-break" data-content="  References  " id="references">
+        <p style="font-size:14px">
+            [1] Haugen, Finn. "State estimation with Kalman Filter." Kompendium
+                for Kyb. 2 ved Høgskolen i Oslo, published online prior to Aug. 10,
+                2017. Accessed Jun. 20, 2023. http://techteach.no/fag/seky3322/
+                0708/kalmanfilter/kalmanfilter.pdf (Year: 2017).
+            <br>
+            [2] The MathWorks, Inc. “What Is Fuzzy Logic?” mathworks.com. Accessed: Jun. 20, 2023. [Online]. Available: https://www.mathworks.com/help/fuzzy/what-is-fuzzy-logic.html.
+        </p>
+
+        <hr class="para-break" data-content="  Related Links  " id="related-links">
+        <p>
+            <i class="fa fa-google"></i>
+            <a class="i_link" href="https://patents.google.com/patent/US11879407B1/en" target="_blank" rel="noopener noreferrer"> Patent </a>
+        </p>
+    </body>
+ 
+
+</html>  
