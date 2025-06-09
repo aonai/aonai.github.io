@@ -56,7 +56,7 @@
             desirable.
             The goal of this project is to increase the accuracy of a throttle valve with only one 
             positional sensor to within 2° and reduce its response time to below 0.2 seconds, 
-            whereas other competitors aim for accuracy worse than 2° and response times slower than 0.5 seconds. 
+            whereas most competitors can only aim for accuracy worse than 2° and response times slower than 0.5 seconds. 
             Some challenges in this project include strong nonlinearities in the control system, uncertainties 
             in system parameters, and aggressive requirements for both static and dynamic responses. Furthermore,
              the robustness of the resulting controller needs to be verified to meet all industrial standards.
@@ -102,10 +102,18 @@
         
         <hr class="para-break" data-content="  Test Results  " id="test-results">
         <p>
-            As a result, the process is able to reach the target valve position with an accuracy of 1° and a response 
-            time of 0.15 seconds. Successfully meeting these requirements allows for the production of a throttle control 
-            system with a similar setup in a more economical way. That is, one can achieve the same accuracy
-            and response time as higher-end merchandise using only one positional sensor in combination with the proposed control algorithm.
+            As a result of the proposed control strategy, the throttle system is able to reach 
+            the target valve position with an accuracy of 1° and a response 
+            time of 0.15 seconds under typical operating conditions. 
+            These results were verified through a series of repeated experiments 
+            conducted in accordance with automotive industry standards. 
+            Additionally, the system demonstrated strong repeatability and robustness. Performance 
+            remained reliable when subjected to parameter uncertainties and sensor noise due to 
+            vibration, shock, electromagnetic interference, and temperature variations. Compared to 
+            throttle systems that typically require multiple sensors or a more complex hardware design, 
+            the proposed setup, with only one positional sensor, achieves comparable performance. 
+            This demonstrates that high accuracy and fast response time can be accomplished 
+            using a low-cost throttle control system for automotive  fuel cell applications. 
         </p>
         <img src="../img/portfolio/patent_merg.png" style="width:80%">        
         
