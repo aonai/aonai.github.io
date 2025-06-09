@@ -17,6 +17,8 @@
         <a href="#system-model">System Model</a>
         <a href="#controls-algorithm">Controls Algorithm</a>
         <a href="#test-results">Test Results</a>
+        <a href="#references">References</a>
+        <a href="#related-links">Related Links</a>
     </nav> 
 
     <body id="page-top" class="index">
@@ -35,7 +37,7 @@
                     </div>
                     <div class="col-lg-10 ">
                         <p>
-                            MATLAB Coder, System Simulation, Controls
+                            System Model, Controls
                             <br>
                             2023-2024
                         </p>
@@ -55,16 +57,17 @@
             ability to accurately and quickly control the fluid flow is
             desirable.
             The goal of this project is to increase the accuracy of a throttle valve with only one 
-            positional sensor to within 2° and reduce its response time to below 0.2 seconds, 
-            whereas most competitors can only aim for accuracy worse than 2° and response times slower than 0.5 seconds. 
+            positional sensor to within 2° and to reduce its response time to below 0.2 seconds, 
+            whereas most competitors target accuracies worse than 2° and response times slower than 0.5 seconds
+            with similar setups. 
             Some challenges in this project include strong nonlinearities in the control system, uncertainties 
             in system parameters, and aggressive requirements for both static and dynamic responses. Furthermore,
-             the robustness of the resulting controller needs to be verified to meet all industrial standards.
+             the robustness of the proposed controller needs to be validated to meet all relevant industrial standards.
         </p>
 
         <hr class="para-break" data-content="  System Model  " id="system-model">
         <p>
-            Suppose the throttle control system for a vehicle under design includes a controller comprising at
+            Suppose the throttle control system under design includes a controller comprising at
             least one processor and at least one memory unit. This valve allows electronic communication with
             the controller to move between multiple positions. The processor is programmed to compare
             the input target positional signal and the detected position signal, then execute the controller to
@@ -76,11 +79,11 @@
         </p>
         <img src="../img/portfolio/patent_sys_model.PNG" style="width:60%">
         <p>
-            Kalman Filtering is often used to limit the effect of sensor noises on measurements <a href="#references">[1]</a>.
-            For this application, detected position signals suffer from noise caused by electromagnetic interference and heat, 
-            which reduces the accuracy and smoothness of velocity. With the help of a Kalman filter, the processor is 
+            Kalman filtering is often used to limit the effect of sensor noise on measurements <a href="#references">[1]</a>.
+            In vehcile throttle systems, detected position signals often suffer from noise caused by electromagnetic interference and heat, 
+            which reduce the accuracy and smoothness of velocity. With the help of a Kalman filter, the processor is 
             able to estimate the true state of the throttle, select more reasonable velocity inputs, and make the controller 
-            more robust when handling velocity-related logic.
+            more robust when handling velocity-related operations.
         </p>
         
         <hr class="para-break" data-content="  Controls Algorithm  " id="controls-algorithm">
@@ -105,15 +108,15 @@
             As a result of the proposed control strategy, the throttle system is able to reach 
             the target valve position with an accuracy of 1° and a response 
             time of 0.15 seconds under typical operating conditions. 
-            These results were verified through a series of repeated experiments 
+            These results were validated through a series of repeated experiments 
             conducted in accordance with automotive industry standards. 
-            Additionally, the system demonstrated strong repeatability and robustness. Performance 
-            remained reliable when subjected to parameter uncertainties and sensor noise due to 
-            vibration, shock, electromagnetic interference, and temperature variations. Compared to 
-            throttle systems that typically require multiple sensors or a more complex hardware design, 
-            the proposed setup, with only one positional sensor, achieves comparable performance. 
-            This demonstrates that high accuracy and fast response time can be accomplished 
-            using a low-cost throttle control system for automotive  fuel cell applications. 
+            The system also demonstrated strong repeatability and robustness. Performance 
+            remained satisfying when subjected to parameter uncertainties and sensor noise caused by
+            vibration, shock, electromagnetic interference, and temperature variations. In comparison to 
+            throttle systems that typically require multiple sensors or more complex hardware designs, 
+            the proposed setup, with only one positional sensor, delivers comparable performance. 
+            This demonstrates that high accuracy and fast response time can be achieved 
+            using a cost-effective throttle control system for automotive fuel cell applications. 
         </p>
         <img src="../img/portfolio/patent_merg.png" style="width:80%">        
         
